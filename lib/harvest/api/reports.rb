@@ -10,7 +10,7 @@ module Harvest
         query[:updated_since] = updated_since(filters[:updated_since]) if filters[:updated_since]
 
         response = request(:get, credentials, "/projects/#{project.to_i}/entries", :query => query)
-#        Harvest::TimeEntry.parse(massage_xml(response.body))
+        Harvest::TimeEntry.parse(massage_xml(response.body))
       end
 
       def time_by_user(user, start_date, end_date, project = nil)
