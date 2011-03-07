@@ -25,7 +25,7 @@ When /^I run a a project report for "([^\"]*)" for "([^\"]*)" and "([^\"]*)" fil
   end_date = Time.parse(end_date)
   project = Then %Q{there should be a project "#{project_name}"}
   user = Then %Q{there should be a user "#{@username}"}
-  entries = harvest_api.reports.time_by_project(project, start_date, end_date, user)
+  entries = harvest_api.reports.time_by_project(project, start_date, end_date, :user => user)
   table.raw.each do |row|
     entry = entries.detect {|e| e.notes == row.first }
     entry.should_not be_nil
@@ -37,7 +37,7 @@ When /^I run a a project report for "([^\"]*)" for "([^\"]*)" and "([^\"]*)" fil
   end_date = Time.parse(end_date)
   project = Then %Q{there should be a project "#{project_name}"}
   user = Then %Q{there should be a user "#{@username}"}
-  entries = harvest_api.reports.time_by_project(project, start_date, end_date, user)
+  entries = harvest_api.reports.time_by_project(project, start_date, end_date, :user => user)
   table.raw.each do |row|
     entry = entries.detect {|e| e.notes == row.first }
     entry.should be_nil

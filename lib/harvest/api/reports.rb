@@ -4,10 +4,13 @@ module Harvest
   module API
     class Reports < Base
 
-      def time_by_project(project, start_date, end_date, user = nil, filters = {})
+      def time_by_project(project, start_date, end_date, filters = {})
         query = {:from => start_date.strftime("%Y%m%d"), :to => end_date.strftime("%Y%m%d")}
-        query[:user_id] = user.to_i if user
+        query[:user_id] = filters[:user].to_i if filters[:user]
         query[:updated_since] = updated_since(filters[:updated_since]) if filters[:updated_since]
+        if filters.keys.include? :billable
+          query[:billable] = filters[:billable] ? "yes" : "no"
+        end
 
         response = request(:get, credentials, "/projects/#{project.to_i}/entries", :query => query)
         Harvest::TimeEntry.parse(massage_xml(response.body))
