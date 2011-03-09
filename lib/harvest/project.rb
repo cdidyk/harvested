@@ -1,5 +1,5 @@
 module Harvest
-  
+
   # The model that contains information about a project
   #
   # == Fields
@@ -22,11 +22,13 @@ module Harvest
   # [+active_task_assignments_count+] (READONLY) the number of active task assignments
   # [+created_at+] (READONLY) when the project was created
   # [+updated_at+] (READONLY) when the project was updated
+  # [+hint_earliest_record_at+] (READONLY) hints to when the earliest date when a timesheet record or an expense was created for a project. (only updated once every 24 hours)
+  # [+hint_latest_record_at+] (READONLY) hints to when the latest date when a timesheet record or an expense was created for a project. (only updated once every 24 hours)
   class Project < BaseModel
     include HappyMapper
-  
+
     api_path '/projects'
-  
+
     element :id, Integer
     element :client_id, Integer, :tag => 'client-id'
     element :name, String
@@ -47,7 +49,9 @@ module Harvest
     element :basecamp_id, Integer, :tag => 'basecamp-id'
     element :highrise_deal_id, Integer, :tag => 'highrise-deal-id'
     element :active_task_assignments_count, Integer, :tag => 'active-task-assignments-count'
-  
+    element :hint_earliest_record_at, Date, :tag => 'hint-earliest-record-at'
+    element :hint_latest_record_at, Date, :tag => 'hint-latest-record-at'
+
     alias_method :active?, :active
     alias_method :billable?, :billable
     alias_method :notify_when_over_budget?, :notify_when_over_budget
