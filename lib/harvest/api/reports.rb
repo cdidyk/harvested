@@ -42,8 +42,8 @@ module Harvest
         end
 
         def updated_since(since_date)
-          since_date = DateTime.parse(since_date) if since_date.kind_of? String
-          CGI::escape since_date.new_offset.to_s   # by default, new_offset is UTC
+          since_date = DateTime.parse(since_date).utc if since_date.kind_of? String
+          CGI::escape since_date.to_s
         end
     end
   end
